@@ -1,9 +1,7 @@
 -- Ocultar la barra de estado
 display.setStatusBar(display.HiddenStatusBar)
 
--- =========================================================================================
--- Variables de Configuración
--- =========================================================================================
+-- Variables Globales
 local puntosPorToque = 2      
 local velocidadInicial = 5    
 local tiempoPorNivel = 30    
@@ -18,9 +16,7 @@ local direccionX = 1
 local direccionY = 1
 local juegoActivo = true
 
--- =========================================================================================
 -- Elementos Visuales del Juego
--- =========================================================================================
 local fondo = display.newImageRect("Fondo.png", display.contentWidth, display.contentHeight)
 fondo.x = display.contentCenterX
 fondo.y = display.contentCenterY 
@@ -34,9 +30,7 @@ circulo.x = display.contentCenterX
 circulo.y = display.contentCenterY
 local radio = 60
 
--- =========================================================================================
 -- Pantalla de Fin de Juego (Grupo estilo Canva)
--- =========================================================================================
 local grupoFinJuego = display.newGroup()
 
 local franjaTitulo = display.newRect(grupoFinJuego, display.contentCenterX, 50, display.contentWidth, 60)
@@ -55,9 +49,7 @@ btnReiniciar:setFillColor(1, 1, 1) -- Blanco para que resalte sobre el verde del
 
 grupoFinJuego.isVisible = false 
 
--- =========================================================================================
 -- Funciones de Lógica
--- =========================================================================================
 
 local function moverCirculo(event)
     if juegoActivo then
@@ -108,13 +100,14 @@ local function siguienteNivel()
     end
 end
 
+-- Función al tocar el circulo
 local function tocarCirculo(event)
     if event.phase == "began" and juegoActivo then
         puntuacion = puntuacion + puntosPorToque 
         marcadorPuntos.text = "Puntos: " .. puntuacion .. " / " .. puntosObjetivo
         
-        circulo.x = math.random(radio, display.contentWidth - radio)
-        circulo.y = math.random(radio, display.contentHeight - radio)
+        circulo.x = math.random(80, display.contentWidth - 80)
+        circulo.y = math.random(80, display.contentHeight - 80)
 
         if puntuacion >= puntosObjetivo then
             siguienteNivel()
@@ -161,9 +154,7 @@ local function reiniciarJuego(event)
     end
 end
 
--- =========================================================================================
 -- Registro de Eventos
--- =========================================================================================
 Runtime:addEventListener("enterFrame", moverCirculo)
 circulo:addEventListener("touch", tocarCirculo)
 btnReiniciar:addEventListener("touch", reiniciarJuego)
